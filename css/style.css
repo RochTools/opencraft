@@ -99,3 +99,5 @@ body { --slot: min(44px, calc((100vw - 16px) / 9 - 4px)); }
 .citem span { color: var(--mute); font-size: .9rem; }
 .citem a { color: var(--accent); word-break: break-all; font-size: .88rem; margin-right: 12px; }
 .citem div { margin-top: 4px; }
+#btnDrive { right: calc(94px + env(safe-area-inset-right, 0px)); bottom: 168px; width: 66px; height: 46px; background: rgba(155, 224, 75, .45); }
+.desk #btnDrive { right: 16px; bottom: 130px; }
