@@ -1,35 +1,10 @@
-بلاک گاؤں - کیسے چلائیں
-=======================
+Open Craft
+==========
+Open index.html in Chrome (or any modern browser). No internet needed.
 
-1) زپ فائل کھولیں (Extract) تاکہ تینوں فائلیں ایک ہی فولڈر میں آ جائیں:
-   index.html, three.min.js, tiles.js
-2) index.html پر ٹیپ/ڈبل کلک کر کے Chrome (یا کسی بھی نئے براؤزر) میں کھولیں۔
-   انٹرنیٹ کی ضرورت نہیں۔
-3) "کھیلنا شروع کریں" دبائیں۔
+Desktop: WASD move | mouse look | Space jump | left click break | right click place
+1-9 / wheel pick slot | E bag | F fly (Shift = down) | Esc pause
+Mobile: left thumb = move, right thumb = look, tap = place, hold = break, Bag button = all blocks.
 
-موبائل پر
----------
-- بائیں طرف انگلی گھسیٹیں: چلنا
-- دائیں طرف انگلی گھسیٹیں: دیکھنا
-- ایک ٹیپ: جہاں انگلی لگائی وہاں بلاک لگے گا
-- انگلی دبا کر رکھیں: جس بلاک پر انگلی ہے وہی ٹوٹ جائے گا
-- "بیگ": 22 قسم کے بلاک، چنا ہوا بلاک نیچے والی پٹی کے منتخب خانے میں آتا ہے
-- "اڑو": آسمان میں اڑنا، "نیچے": نیچے آنا
-- فون گھمائیں تو سکرین خود ٹھیک ہو جاتی ہے
-
-کمپیوٹر پر
-----------
-W A S D چلنا | ماؤس دیکھنا | اسپیس چھلانگ | بایاں کلک توڑنا | دایاں کلک لگانا
-1 سے 9 بلاک چننا | E بیگ | F اڑنا | Shift نیچے | Esc روکنا
-
-آپ کی بنائی ہوئی دنیا اسی براؤزر میں محفوظ ہوتی ہے۔
-
-کریڈٹس (CC-BY 4.0)
-------------------
-- "Minecraft Blocks Pack - Low Poly" by My Name Is This
-  https://sketchfab.com/3d-models/minecraft-blocks-pack-low-poly-8ea1e7dc1ae34dc38e17be1b1ee8e430
-- "Minecraft Blocks" by wowiswow
-  https://sketchfab.com/3d-models/minecraft-blocks-840d7b5a115d40febaeb1e668ff2e96b
-لائسنس: http://creativecommons.org/licenses/by/4.0/
-(ان ماڈلز سے بلاکس کی تصویریں لے کر گیم کے ٹائل بنائے گئے ہیں۔)
-3D انجن: three.js r128 (MIT)
+Folders: css/ (styles), js/game.js (game code), js/data/ (block tiles and credits), js/lib/ (three.js)
+Credits: see the "Credits & Contributors" button on the start screen (or js/data/credits.js).
