@@ -1,0 +1,101 @@
+/* Layout: full-screen first-person canvas, floating touch controls, one centered menu card. */
+:root {
+  color-scheme: dark;
+  --ink: #12190f;
+  --sky: #8ec9ff;
+  --panel: rgba(16, 22, 14, 0.88);
+  --fg: #f4f0e2;
+  --mute: #b9c2a8;
+  --accent: #9be04b;
+  --accent-edge: #5f9a23;
+  --accent-ink: #13200a;
+  --line: rgba(255, 255, 255, 0.22);
+  --btn: rgba(16, 22, 14, 0.55);
+  --font-ui: "Segoe UI", Roboto, Helvetica, Arial, system-ui, sans-serif;
+}
+html, body { height: 100%; margin: 0; overflow: hidden; overscroll-behavior: none; }
+body {
+  background: var(--ink); color: var(--fg); font-family: var(--font-ui); font-size: 16px;
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent;
+}
+#app { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--sky); }
+canvas { display: block; width: 100%; height: 100%; }
+#zone { position: absolute; inset: 0; touch-action: none; }
+.desk #zone { display: none; }
+.desk .touchui { display: none !important; }
+.touch .deskonly { display: none !important; }
+
+#cross { position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px; pointer-events: none; mix-blend-mode: difference; }
+#cross::before, #cross::after { content: ""; position: absolute; background: #fff; }
+#cross::before { left: 10px; top: 2px; width: 2px; height: 18px; }
+#cross::after { top: 10px; left: 2px; height: 2px; width: 18px; }
+
+#fps { position: absolute; top: 8px; left: calc(10px + env(safe-area-inset-left, 0px)); font: 12px/1 ui-monospace, Menlo, monospace; color: #fff; text-shadow: 0 1px 2px #000; pointer-events: none; }
+#blockname { position: absolute; left: 0; right: 0; bottom: calc(var(--slot) + 22px); text-align: center; font-weight: 700; text-shadow: 0 1px 3px #000, 0 0 8px #000; pointer-events: none; opacity: 0; transition: opacity .25s; }
+#blockname.on { opacity: 1; }
+
+#hotbar { --slot: min(44px, calc((100vw - 16px) / 9 - 4px)); position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); display: flex; gap: 3px; padding: 3px; background: var(--btn); border: 2px solid var(--line); border-radius: 4px; direction: ltr; }
+.slot { width: var(--slot); height: var(--slot); box-sizing: border-box; border: 2px solid transparent; border-radius: 2px; display: grid; place-items: center; background: rgba(0,0,0,.25); cursor: pointer; touch-action: none; }
+.slot.sel { border-color: #fff; background: rgba(255,255,255,.18); }
+.ico { width: 78%; height: 78%; image-rendering: pixelated; background-size: 400% 400%; }
+body { --slot: min(44px, calc((100vw - 16px) / 9 - 4px)); }
+
+.gbtn { position: absolute; display: grid; place-items: center; border: 2px solid rgba(255,255,255,.4); border-radius: 12px; background: var(--btn); color: #fff; font: 700 15px/1 var(--font-ui); touch-action: none; padding: 0; }
+.gbtn[hidden] { display: none; }
+.gbtn:active, .gbtn.on { background: rgba(155, 224, 75, .55); }
+#btnJump { right: calc(16px + env(safe-area-inset-right, 0px)); bottom: 64px; width: 66px; height: 66px; border-radius: 50%; font-size: 26px; }
+#btnFly { right: calc(94px + env(safe-area-inset-right, 0px)); bottom: 64px; width: 54px; height: 46px; }
+#btnDown { right: calc(94px + env(safe-area-inset-right, 0px)); bottom: 116px; width: 54px; height: 46px; }
+#btnMenu { top: 8px; right: calc(10px + env(safe-area-inset-right, 0px)); width: 44px; height: 40px; font-size: 20px; }
+.desk #btnMenu, .desk #btnBag { display: none; }
+.touch #cross { display: none; }
+#btnBag { top: 56px; right: calc(10px + env(safe-area-inset-right, 0px)); width: 44px; height: 40px; font-size: 13px; }
+
+#joyBase { position: absolute; width: 112px; height: 112px; margin: -56px 0 0 -56px; border-radius: 50%; border: 2px solid rgba(255,255,255,.4); background: rgba(16,22,14,.3); display: none; pointer-events: none; }
+#joyKnob { position: absolute; left: 50%; top: 50%; width: 52px; height: 52px; margin: -26px 0 0 -26px; border-radius: 50%; background: rgba(255,255,255,.55); }
+
+#overlay, #bag, #credits { position: absolute; inset: 0; display: flex; padding: 16px; box-sizing: border-box; background: rgba(8, 14, 6, .42); overflow-y: auto; }
+#overlay[hidden], #bag[hidden], #credits[hidden] { display: none; }
+#credits { z-index: 6; background: rgba(8, 14, 6, .96); }
+#bag { z-index: 5; }
+#bag h1 { font-size: 1.6rem; }
+#bag .card { max-height: 100%; overflow-y: auto; }
+#bagGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 8px; margin: 12px 0; }
+.bagitem { display: grid; justify-items: center; gap: 4px; padding: 8px 4px; border: 2px solid var(--line); border-radius: 6px; background: rgba(255,255,255,.06); color: var(--fg); font: 500 .8rem/1.3 var(--font-ui); cursor: pointer; }
+.bagitem:active { background: rgba(155,224,75,.3); }
+.bagitem .ico { width: 40px; height: 40px; }
+.credit { font-size: .74rem; line-height: 1.7; margin: 14px 0 0; color: var(--mute); }
+.credit a { color: var(--accent); }
+.card { margin: auto; width: min(440px, 100%); box-sizing: border-box; background: var(--panel); border: 2px solid var(--line); border-bottom-width: 6px; border-radius: 6px; padding: 20px 20px 22px; text-align: center; }
+.card h1 { margin: 0 0 6px; font-size: 2.5rem; line-height: 1.25; font-weight: 700; color: var(--accent); text-shadow: 0 3px 0 #2d4a0c; }
+.card p { margin: 0 0 14px; color: var(--mute); line-height: 1.8; }
+.card ul { margin: 0 0 18px; padding: 0 18px 0 0; line-height: 1.9; }
+.card li { margin: 0; }
+.card b { color: var(--fg); }
+.card .tip { font-size: .9rem; margin: 14px 0 0; }
+.big { display: block; width: 100%; box-sizing: border-box; font: 700 1.2rem/1 var(--font-ui); padding: 14px 16px 12px; background: var(--accent); color: var(--accent-ink); border: 0; border-bottom: 5px solid var(--accent-edge); border-radius: 6px; cursor: pointer; }
+.big:active { transform: translateY(2px); border-bottom-width: 3px; }
+.big:focus-visible, .small:focus-visible, .gbtn:focus-visible, .bagitem:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.small { display: block; width: 100%; margin-top: 10px; font: 500 .95rem/1 var(--font-ui); padding: 11px; background: transparent; color: var(--mute); border: 1px solid var(--line); border-radius: 6px; cursor: pointer; }
+#err { color: #ffb4a6; display: none; }
+@media (max-height: 520px) {
+  #overlay { padding: 8px; }
+  .card { padding: 10px 16px 12px; border-bottom-width: 4px; }
+  .card h1 { font-size: 1.7rem; margin-bottom: 2px; }
+  .card p { font-size: .88rem; line-height: 1.55; margin-bottom: 6px; }
+  .card ul { font-size: .88rem; line-height: 1.5; margin-bottom: 8px; }
+  .card .tip { display: none; }
+  .big { padding: 11px 12px 9px; font-size: 1.05rem; }
+  .small { margin-top: 6px; padding: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { #blockname { transition: none; } }
+
+.card.wide { width: min(560px, 100%); text-align: left; }
+.card.wide h1 { font-size: 1.9rem; text-align: center; }
+.card.wide > p { text-align: center; }
+#creditList { display: grid; gap: 10px; margin: 8px 0 6px; }
+.citem { border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; background: rgba(255,255,255,.05); line-height: 1.55; }
+.citem b { display: block; color: var(--fg); }
+.citem span { color: var(--mute); font-size: .9rem; }
+.citem a { color: var(--accent); word-break: break-all; font-size: .88rem; margin-right: 12px; }
+.citem div { margin-top: 4px; }
